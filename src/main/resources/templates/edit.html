@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todoリスト編集画面</title>
+</head>
+<body>
+Todoの内容を変更します
+<div>
+    <table>
+        <tr>
+            <th>タイトル</th>
+            <th>期日</th>
+        </tr>
+        <tr th:each="todo : ${todoList}" th:object="${todo}">
+            <td th:text="*{title}"></td>
+            <td th:text="${#temporals.format(todo.deadline, 'yyyy年MM月dd日')}"></td>
+            <span th:text="*{id}"></span>
+        </tr>
+    </table>
+    <div>
+        ToDoの内容を更新する
+        <form action="/complete" th:method="put">
+            <table>
+                <input th:text="*{id}">
+                <tr>
+                    <td>ToDo名</td>
+                    <td><input type="text" name="title"></td>
+                </tr>
+                <tr>
+                    <td>期限</td>
+                    <td><input type="date" name="deadline"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="更新"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
