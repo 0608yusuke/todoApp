@@ -1,6 +1,5 @@
 package Yusuke.todo.controller;
 
-import Yusuke.todo.entity.Todo;
 import Yusuke.todo.form.TodoForm;
 import Yusuke.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +49,7 @@ public class TodoController {
 
     @PatchMapping("/toggle-status")
     public String reverse(@RequestParam Long id){
-        Todo testTodo = todoService.what(id);
+        todoService.what(id);
 
 
 

@@ -27,11 +27,12 @@ public class TodoService {
         return todoRepository.findByTitleContainingOrderByDeadlineDesc(title);
     }
 
-    public Todo what(long id){
-        return todoRepository.findById(id);
-        //boolean status = testTodo.isStatus();
-        //status = !status;
-        //testTodo.setStatus(status);
+    public void what(long id){
+        Todo testTodo = todoRepository.findById(id);
+        boolean status = testTodo.isStatus();
+        status = !status;
+        testTodo.setStatus(status);
+        todoRepository.save(testTodo);
     }
     public List<Todo> test(long id){
         return todoRepository.findByIdOrderByDeadlineDesc(id);
@@ -41,13 +42,14 @@ public class TodoService {
 
     }
 
-    public void update(Long id,TodoForm todoForm){
-        Todo edittodo = new Todo();
+    public void update(long id,TodoForm todoForm){
+        Todo edittodo = todoRepository.findById(id);
 
         edittodo.setId(id);
         edittodo.setTitle(todoForm.getTitle());
         edittodo.setDeadline(todoForm.getDeadline());
-        edittodo.setCreateTime(LocalDateTime.now());
+        edittodo.setUpdateTime(LocalDateTime.now());
+        edittodo.setCreateTime(edittodo.getCreateTime());
         todoRepository.save(edittodo);
     }
 

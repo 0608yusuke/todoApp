@@ -15,15 +15,15 @@ Todoの内容を変更します
         <tr th:each="todo : ${todoList}" th:object="${todo}">
             <td th:text="*{title}"></td>
             <td th:text="${#temporals.format(todo.deadline, 'yyyy年MM月dd日')}"></td>
-            <span th:text="*{id}"></span>
         </tr>
     </table>
     <div>
         ToDoの内容を更新する
         <form action="/complete" th:method="put">
             <table>
-                <input th:text="*{id}">
-                <tr>
+
+                <tr th:each="todo : ${todoList}" th:object="${todo}">
+                    <td><input type="hidden" name="id" th:value="*{id}"></td>
                     <td>ToDo名</td>
                     <td><input type="text" name="title"></td>
                 </tr>
