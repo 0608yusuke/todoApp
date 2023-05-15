@@ -61,5 +61,9 @@ public class TodoController {
         return "redirect:/";
     }
 
+    @RequestMapping("/error")
+    public String getError(Model model) {
+        throw new ExceptionControllerAdvice.MemoException();
+    }
 }
 
