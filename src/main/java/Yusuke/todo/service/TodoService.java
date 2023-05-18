@@ -34,13 +34,11 @@ public class TodoService {
         testTodo.setStatus(status);
         todoRepository.save(testTodo);
     }
-    public List<Todo> test(long id){
+    public List<Todo> findId(long id){
+
         return todoRepository.findByIdOrderByDeadlineDesc(id);
         }
 
-    public  void toggleStatus(boolean testTodo){
-
-    }
 
     public void update(long id,TodoForm todoForm){
         Todo edittodo = todoRepository.findById(id);

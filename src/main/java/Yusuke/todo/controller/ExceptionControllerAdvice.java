@@ -11,23 +11,22 @@ import org.springframework.web.bind.annotation.*;
 public class ExceptionControllerAdvice {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
 
-    @ExceptionHandler({MemoException.class})
+    @ExceptionHandler({TodoException.class})
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ResponseBody
-    public String handleException(MemoException e) {
-        LOGGER.error("MemoException", e);
-        return "error!!";
+    public String handleException(TodoException e) {
+        LOGGER.error("TodoException", e);
+        return "error!";
     }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
+
         LOGGER.info("InitBinder");
     }
 
-    @ModelAttribute
-    public void modelAttribute() {
-        LOGGER.info("ModelAttribute");
-    }
 
-    public static class MemoException extends RuntimeException {}
+
+    public static class TodoException extends RuntimeException {}
+    public static class Todo2Exception extends RuntimeException {}
 }

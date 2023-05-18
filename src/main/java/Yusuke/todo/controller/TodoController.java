@@ -1,11 +1,14 @@
 package Yusuke.todo.controller;
 
+import Yusuke.todo.entity.Todo;
 import Yusuke.todo.form.TodoForm;
 import Yusuke.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,21 +41,26 @@ public class TodoController {
 
     @GetMapping("/search")
     public String request(){
+
         return "search";
     }
 
     @GetMapping("/edit")
     public String edit(@RequestParam Long id,Model model){
-        model.addAttribute("todoList", todoService.test(id));
+        List<Todo> list = todoService.findId(id);
+        if (list.size() == 0) {
+            getError(model);
+        }
+        else {
+            model.addAttribute("todoList", todoService.findId(id));
+        }
         return "edit";
     }
 
+
     @PatchMapping("/toggle-status")
-    public String reverse(@RequestParam Long id){
+    public String toggle(@RequestParam Long id){
         todoService.what(id);
-
-
-
         return "redirect:/";
     }
     @PutMapping("/complete")
@@ -61,9 +69,9 @@ public class TodoController {
         return "redirect:/";
     }
 
-    @RequestMapping("/error")
+    @RequestMapping("/e")
     public String getError(Model model) {
-        throw new ExceptionControllerAdvice.MemoException();
+        throw new ExceptionControllerAdvice.TodoException();
     }
 }
 
