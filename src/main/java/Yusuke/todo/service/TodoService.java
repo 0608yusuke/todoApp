@@ -27,16 +27,15 @@ public class TodoService {
         return todoRepository.findByTitleContainingOrderByDeadlineDesc(title);
     }
 
-    public void what(long id){
+    public void toglleUpdate(long id){
         Todo testTodo = todoRepository.findById(id);
         boolean status = testTodo.isStatus();
         status = !status;
         testTodo.setStatus(status);
         todoRepository.save(testTodo);
     }
-    public List<Todo> findId(long id){
-
-        return todoRepository.findByIdOrderByDeadlineDesc(id);
+    public Todo findById(long id){
+        return todoRepository.findById(id);
         }
 
 

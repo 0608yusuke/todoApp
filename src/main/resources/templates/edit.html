@@ -19,7 +19,7 @@ Todoの内容を変更します
     </table>
     <div>
         ToDoの内容を更新する
-        <form action="/complete" th:method="put">
+        <form action="/edit/complete" th:method="put">
             <table>
 
                 <tr th:each="todo : ${todoList}" th:object="${todo}">

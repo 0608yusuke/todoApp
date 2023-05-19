@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 public class TodoController {
@@ -47,12 +45,12 @@ public class TodoController {
 
     @GetMapping("/edit")
     public String edit(@RequestParam Long id,Model model){
-        List<Todo> list = todoService.findId(id);
-        if (list.size() == 0) {
-            getError(model);
+        Todo todo = todoService.findById(id);
+        if (todo.getTitle() == null) {
+            throw new ExceptionControllerAdvice.TodoException();
         }
         else {
-            model.addAttribute("todoList", todoService.findId(id));
+            model.addAttribute("todoList", todoService.findById(id));
         }
         return "edit";
     }
@@ -60,18 +58,16 @@ public class TodoController {
 
     @PatchMapping("/toggle-status")
     public String toggle(@RequestParam Long id){
-        todoService.what(id);
+        todoService.toglleUpdate(id);
         return "redirect:/";
     }
-    @PutMapping("/complete")
+    @PutMapping("/edit/complete")
     public  String complete(@RequestParam Long id, TodoForm todoForm){
         todoService.update(id,todoForm);
         return "redirect:/";
     }
 
-    @RequestMapping("/e")
-    public String getError(Model model) {
-        throw new ExceptionControllerAdvice.TodoException();
-    }
+
+
 }
 

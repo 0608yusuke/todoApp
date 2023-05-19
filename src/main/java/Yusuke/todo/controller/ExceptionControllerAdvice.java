@@ -1,6 +1,7 @@
 package Yusuke.todo.controller;
 
 
+import Yusuke.todo.entity.Todo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -12,11 +13,11 @@ public class ExceptionControllerAdvice {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
 
     @ExceptionHandler({TodoException.class})
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public String handleException(TodoException e) {
-        LOGGER.error("TodoException", e);
-        return "error!";
+        LOGGER.warn("TodoException", e);
+        return "error!!";
     }
 
     @InitBinder
@@ -24,9 +25,15 @@ public class ExceptionControllerAdvice {
 
         LOGGER.info("InitBinder");
     }
+    @ModelAttribute
+    public void modelAttribute(Todo model) {
+        LOGGER.info("ModelAttribute");
+        }
+    public static void warn(String msg) {
+        LOGGER.warn(msg);
+    }
 
 
 
     public static class TodoException extends RuntimeException {}
-    public static class Todo2Exception extends RuntimeException {}
 }
