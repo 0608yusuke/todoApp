@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 public class Todo {
     public static Todo of(TodoForm todoForm){
         Todo todo = new Todo();
+
         todo.setTitle(todoForm.getTitle());
         todo.setDeadline(todoForm.getDeadline());
         return todo;

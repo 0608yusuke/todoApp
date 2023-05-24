@@ -46,12 +46,10 @@ public class TodoController {
     @GetMapping("/edit")
     public String edit(@RequestParam Long id,Model model){
         Todo todo = todoService.findById(id);
-        if (todo.getTitle() == null) {
+           if (todo.getId() == null) {
             throw new ExceptionControllerAdvice.TodoException();
         }
-        else {
-            model.addAttribute("todoList", todoService.findById(id));
-        }
+        model.addAttribute("todoList", todoService.findById(id));
         return "edit";
     }
 
@@ -66,6 +64,7 @@ public class TodoController {
         todoService.update(id,todoForm);
         return "redirect:/";
     }
+
 
 
 
