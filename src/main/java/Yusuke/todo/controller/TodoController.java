@@ -46,11 +46,15 @@ public class TodoController {
     @GetMapping("/edit")
     public String edit(@RequestParam Long id,Model model){
         Todo todo = todoService.findById(id);
-           if (todo.getId() == null) {
+        try{
+           if (todo.getId() == null) {}
+            model.addAttribute("todoList", todoService.findById(id));
+            return "edit";
+           }
+        catch (NullPointerException e){
             throw new ExceptionControllerAdvice.TodoException();
         }
-        model.addAttribute("todoList", todoService.findById(id));
-        return "edit";
+
     }
 
 
