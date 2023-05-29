@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todoリスト課題トップページ</title>
+</head>
+<body>
+
+<div>
+    <div>
+        新しいToDoを作成する
+        <form action="/register" method="post">
+            <table>
+                <tr>
+                    <td>ToDo名</td>
+                    <td><input type="text" name="title"></td>
+                </tr>
+                <tr>
+                    <td>期限</td>
+                    <td><input type="date" name="deadline"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="登録"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <table>
+        <tr>
+            <th>タイトル</th>
+            <th>期日</th>
+            <th>ステータス</th>
+        </tr>
+        <tr th:each="todo : ${todoList}" th:object="${todo}">
+            <td th:text="*{title}"></td>
+            <td th:text="${#temporals.format(todo.deadline, 'yyyy年MM月dd日')}"></td>
+            <td>
+                <form action="/toggle-status" th:method="patch">
+                    <input type="hidden" name="id" th:value="*{id}">
+                    <input th:if="${todo.status}" type="submit" value="完了にする">
+                    <input th:unless="${todo.status}" type="submit" value="未完了にする">
+                </form>
+            </td>
+            <td>
+                <form action="edit" method="get">
+                    <input type="hidden" name="id" th:value="*{id}">
+                    <input type="submit" value="編集">
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<form action="/search" method="get">
+    <input type="submit" value="検索ページ">
+</form>
+
+</body>
+</html>
