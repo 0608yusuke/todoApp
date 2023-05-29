@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TodoController {
     private final TodoService todoService;
+
     /**
      * トップ画面を表示
      *
@@ -22,11 +23,11 @@ public class TodoController {
     public String index(Model model) {
         model.addAttribute("todoList", todoService.searchAllTodo());
         return "index";
-        }
+    }
 
     @PostMapping("/register")
     public String register(TodoForm todoForm) {
-        todoService.saveTodo(todoForm);
+        todoService.register(todoForm);
         return "redirect:/";
     }
 
@@ -36,41 +37,29 @@ public class TodoController {
         return "search";
     }
 
-
     @GetMapping("/search")
     public String request(){
-
         return "search";
     }
 
     @GetMapping("/edit")
     public String edit(@RequestParam Long id,Model model){
         Todo todo = todoService.findById(id);
-        try{
-           if (todo.getId() == null) {}
-            model.addAttribute("todoList", todoService.findById(id));
-            return "edit";
-           }
-        catch (NullPointerException e){
-            throw new ExceptionControllerAdvice.TodoException();
-        }
-
+        model.addAttribute("todoList", todo);
+        return "edit";
     }
-
 
     @PatchMapping("/toggle-status")
     public String toggle(@RequestParam Long id){
-        todoService.toglleUpdate(id);
+        todoService.toggle(id);
         return "redirect:/";
     }
+
     @PutMapping("/edit/complete")
-    public  String complete(@RequestParam Long id, TodoForm todoForm){
+    public  String editComplete(@RequestParam Long id, TodoForm todoForm){
         todoService.update(id,todoForm);
         return "redirect:/";
     }
-
-
-
 
 }
 

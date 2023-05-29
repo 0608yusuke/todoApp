@@ -19,19 +19,20 @@ public class ExceptionControllerAdvice {
     public  String todoError(TodoException e, Model model) {
         LOGGER.warn("TodoException", e);
         return "/error/404";
-}
+    }
+
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public String notFileError(HttpRequestMethodNotSupportedException e, Model model){
+    public String methodNotError(HttpRequestMethodNotSupportedException e, Model model){
         LOGGER.warn("HttpRequestMethodNotSupportedException", e);
         return "/error/405";
     }
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String Exception(Exception e, Model model){
+    public String exception(Exception e, Model model){
         LOGGER.error("Exception", e);
         return "500";
-}
+    }
 
     public static class TodoException extends RuntimeException {}
 }

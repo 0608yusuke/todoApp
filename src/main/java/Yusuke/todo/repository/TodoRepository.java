@@ -12,7 +12,6 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     List<Todo> findByTitleContainingOrderByDeadlineDesc(String title);
 
     Todo findById(long id);
-
 }
 
 

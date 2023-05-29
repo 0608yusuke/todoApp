@@ -1,5 +1,6 @@
 package Yusuke.todo.service;
 
+import Yusuke.todo.controller.ExceptionControllerAdvice;
 import Yusuke.todo.entity.Todo;
 import Yusuke.todo.form.TodoForm;
 import Yusuke.todo.repository.TodoRepository;
@@ -19,7 +20,7 @@ public class TodoService {
     public List<Todo> searchAllTodo() {
         return todoRepository.findAll();
         }
-    public void saveTodo(TodoForm todoForm) {
+    public void register(TodoForm todoForm) {
         todoRepository.save(Todo.of(todoForm));
     }
 
@@ -27,27 +28,31 @@ public class TodoService {
         return todoRepository.findByTitleContainingOrderByDeadlineDesc(title);
     }
 
-    public void toglleUpdate(long id){
-        Todo testTodo = todoRepository.findById(id);
-        boolean status = testTodo.isStatus();
+    public void toggle(long id){
+        Todo todo = todoRepository.findById(id);
+        boolean status = todo.isStatus();
         status = !status;
-        testTodo.setStatus(status);
-        todoRepository.save(testTodo);
+        todo.setStatus(status);
+        todoRepository.save(todo);
     }
+
     public Todo findById(long id){
-        return todoRepository.findById(id);
+        Todo todo = todoRepository.findById(id);
+        if (todo == null) {
+            throw new ExceptionControllerAdvice.TodoException();
         }
+        return todo;
+    }
 
 
     public void update(long id,TodoForm todoForm){
-        Todo edittodo = todoRepository.findById(id);
+        Todo editedTodo = todoRepository.findById(id);
 
-        edittodo.setId(id);
-        edittodo.setTitle(todoForm.getTitle());
-        edittodo.setDeadline(todoForm.getDeadline());
-        edittodo.setUpdateTime(LocalDateTime.now());
-        edittodo.setCreateTime(edittodo.getCreateTime());
-        todoRepository.save(edittodo);
+        editedTodo.setId(id);
+        editedTodo.setTitle(todoForm.getTitle());
+        editedTodo.setDeadline(todoForm.getDeadline());
+        editedTodo.setUpdateTime(LocalDateTime.now());
+        todoRepository.save(editedTodo);
     }
 
 }

@@ -23,6 +23,7 @@ public class Todo {
         todo.setDeadline(todoForm.getDeadline());
         return todo;
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
