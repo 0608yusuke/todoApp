@@ -8,7 +8,8 @@ todoを登録、編集、完了・未完了の切り替え、todoの検索機能
 - JPA
 - Thymeleaf
 - lombok
-  開発環境
+  
+開発環境
 - intelliJ
 # 機能、使い方
 - todoの名前と期限を入力し登録する
